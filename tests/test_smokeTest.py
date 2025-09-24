@@ -9,13 +9,10 @@ from selenium.webdriver.support import expected_conditions
 from selenium.webdriver.support.wait import WebDriverWait
 from selenium.webdriver.common.keys import Keys
 from selenium.webdriver.common.desired_capabilities import DesiredCapabilities
-from selenium.webdriver.chrome.options import Options
 
 class TestSmokeTest():
   def setup_method(self, method):
-    options = Options()
-    options.add_argument("--headless=new")
-    self.driver = webdriver.Chrome(options=options)
+    self.driver = webdriver.Firefox()
     self.vars = {}
   
   def teardown_method(self, method):
@@ -23,6 +20,8 @@ class TestSmokeTest():
   
   def test_adminPage(self):
     self.driver.get("http://127.0.0.1:5500/teton/1.6/index.html")
+    self.driver.set_window_size(550, 692)
+    self.driver.find_element(By.CSS_SELECTOR, "#hamburger-equiv > img").click()
     self.driver.find_element(By.LINK_TEXT, "Admin").click()
     elements = self.driver.find_elements(By.ID, "username")
     assert len(elements) > 0
@@ -46,6 +45,8 @@ class TestSmokeTest():
   
   def test_homePage(self):
     self.driver.get("http://127.0.0.1:5500/teton/1.6/index.html")
+    self.driver.set_window_size(550, 692)
+    self.driver.find_element(By.CSS_SELECTOR, "#hamburger-equiv > img").click()
     elements = self.driver.find_elements(By.CSS_SELECTOR, ".header-logo img")
     assert len(elements) > 0
     assert self.driver.find_element(By.CSS_SELECTOR, ".header-title > h1").text == "Teton Idaho"
@@ -63,6 +64,8 @@ class TestSmokeTest():
   
   def test_joinPage(self):
     self.driver.get("http://127.0.0.1:5500/teton/1.6/index.html")
+    self.driver.set_window_size(550, 692)
+    self.driver.find_element(By.CSS_SELECTOR, "#hamburger-equiv > img").click()
     self.driver.find_element(By.LINK_TEXT, "Join").click()
     elements = self.driver.find_elements(By.NAME, "fname")
     assert len(elements) > 0
